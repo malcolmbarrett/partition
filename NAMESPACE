@@ -1,0 +1,10 @@
+
+export(
+	## add new functions separated by comma when needed
+	partition, sim_blk_diag_mvn, plot_dr, kmeans_icc
+)
+
+importFrom("stats", "anova", "glm", "lm", "na.exclude", "pf", "pnorm", "qnorm", "resid", "sd", "var", "cor", "prcomp", "kmeans",  "runif")
+importFrom("grDevices", "dev.off", "pdf")
+importFrom("graphics", "hist")
+importFrom("ggplot2", "theme_bw", "geom_area", "scale_fill_brewer", "scale_x_continuous", "sec_axis", "xlab", "ylab", "labs", "theme", "guides", "guide_legend", "annotate", "aes") 
