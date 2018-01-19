@@ -1,4 +1,4 @@
-##############################################################################################
+############################################################################################
 # Program Name: Partition_Agglomerative.R
 # Purpose: unsupervised dimension-reduction with agglomerative approach to partition algorithm.
 # Programmer: Joshua Millstein
