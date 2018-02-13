@@ -49,6 +49,51 @@ km_icc = function( mymat, k ){
 
 # Function to compute K means for ICC threshold
 #   Return k, summary variables, and respective ICC values
+
+
+#' K-means dimension reduction
+#' 
+#' Dimension reduction function using k-means to partition variables into
+#' subsets, summarizing each by their means. The reduction is subject to an
+#' information loss constraint specified by the user and measured by the
+#' intraclass correlation (ICC), thus k is computed rather than provided as an
+#' input.
+#' 
+#' The algorithm works by reducing K to its smallest value that satisfies
+#' threshold.icc. That is, a value of K - 1, would yield at least one cluster
+#' where the ICC comparing cluster variables to the mean would be smaller than
+#' threshold.icc.
+#' 
+#' @param mymat Full dataset, NxP matrix or dataframe with N samples in rows
+#' and P variables in columns.
+#' @param threshold.icc This values specifies the maximum information loss for
+#' any cluster as measured by the ICC. Using k-means, the input dataset is
+#' reduced to an NxK dataset, where K is as small as small as possible subject
+#' the constraint. Reducing the threshold.icc yields a more permissive
+#' constraint, which tends to reduce the dimension K in the output dataset.
+#' @return A list which includes the following columns: \item{ dat.r }{A
+#' dataset (dataframe) with reduced number of variables, dimensions N x R.}
+#' \item{cluster.info }{A dataset (dataframe) specifying the mapping between
+#' the original variables and the reduced variables. Also included is a column,
+#' icc, with ICC estimates for proportion of variance captured by the summary
+#' variable, the mean.}
+#' @author Joshua Millstein
+#' @references Millstein J, et al.
+#' @keywords first principal component, intraclass correlation coefficient,
+#' mutual information
+#' @examples
+#' 
+#' 
+#' blk.vec = 2:20
+#' c.lb = .2
+#' c.ub = .4
+#' n = 200
+#' 
+#' dat = sim_blk_diag_mvn( blk.vec, c.lb, c.ub, n  )
+#' 
+#' rslts = kmeans_icc( dat, threshold.icc=.4 )
+#' 
+#' @export
 kmeans_icc = function( mymat, threshold.icc ){
 	m = ncol(mymat)
 	min.icc.m = rep(0, m)
