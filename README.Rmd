@@ -1,0 +1,48 @@
+---
+output: github_document
+---
+
+[![Travis build status](https://travis-ci.org/gvegayon/partition.svg?branch=master)](https://travis-ci.org/gvegayon/partition)
+[![AppVeyor Build Status](https://ci.appveyor.com/gvegayon/partition)](https://ci.appveyor.com/api/projects/status/github//gvegayon/partition/?branch=master&svg=true)
+[![Coverage status](https://codecov.io/gh/gvegayon/partition/branch/master/graph/badge.svg)](https://codecov.io/github/gvegayon/partition?branch=master)
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# partition
+
+The goal of partition is to ...
+
+## Installation
+
+You can install partition from GitHub with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("gvegayon/partition")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example, cache=TRUE}
+library(partition)
+
+blk.vec = 2:20
+c.lb = .2
+c.ub = .4
+n = 200
+
+dat = sim_blk_diag_mvn( blk.vec, c.lb, c.ub, n  )
+
+rslts = plot_dr( dat, method="PC1")
+```
+
