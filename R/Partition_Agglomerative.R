@@ -22,7 +22,7 @@ smry.mthd = function( tmpmat, method ){
 # return ICC and sum of raw variables
 ICC.log.sm = function( tmpmat ){
 	dat.vec = log(as.numeric( as.matrix(tmpmat) )+1)
-	nms = rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) )
+	nms = as.factor( rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) ) )
 	outp = vector('list', 2 )
 	outp[[1]] = ICC::ICCbareF( nms, dat.vec ) 
 	outp[[2]] = apply(tmpmat, 1, sum, na.rm=TRUE)
@@ -32,7 +32,7 @@ ICC.log.sm = function( tmpmat ){
 # return ICC and mean of raw variables, center and scale
 ICC.mn = function( tmpmat ){
 	dat.vec = as.numeric( as.matrix(tmpmat) )
-	nms = rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) )
+	nms = as.factor( rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) ) )
 	outp = vector('list', 2 )
 	outp[[1]] = ICC::ICCbareF( nms, dat.vec ) 
 	outp[[2]] = apply(tmpmat, 1, mean, na.rm=TRUE)
@@ -154,7 +154,7 @@ assn.clustr = function( clust.vec, dist.r, dat.r, dat, pct.var, clusters, cluste
 	success = FALSE
 	clust.var.nms = colnames(dat.r[ , clust.vec ])
 	clust.var.nms.raw = rownames(clusters)[ is.element( clusters[,"cluster"], colnames(dat.r[ , clust.vec ]) ) ]
-	cluster.nm = paste( "C", cluster.ind, sep="" )
+	cluster.nm = paste( "ReducedNewVar", cluster.ind, sep="" )
 	
 	# 2. compute summary and test against pct.var
 	var.ind = which( is.element( colnames(dat), clust.var.nms.raw ) )
