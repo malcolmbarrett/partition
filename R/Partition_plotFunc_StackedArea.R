@@ -217,7 +217,7 @@ plot_dr = function(
 	  if (verb)
 	    message( sprintf( "permuted %s pct.var=%04.2f",  Sys.time(), pct.var ) )
 	  
-		tmp = partition( dat, pct.var,  method, dist.type )
+		tmp = partition( dat1, pct.var,  method, dist.type )
 		clstr = tmp[[2]]
 		dat.plot[ is.element(dat.plot$pct.var.target, pct.var), "clst.num"] =
 		  hist(table(clstr[,"cluster"]),breaks=breaks,plot=FALSE)$counts
