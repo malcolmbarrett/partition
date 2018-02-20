@@ -1,5 +1,5 @@
 
-[![Travis build status](https://travis-ci.org/gvegayon/partition.svg?branch=master)](https://travis-ci.org/gvegayon/partition) [![Build status](https://ci.appveyor.com/api/projects/status/9rnot7opu66xpyns/branch/master?svg=true)](https://ci.appveyor.com/project/gvegayon/partition-nqr95/branch/master) [![Coverage status](https://codecov.io/gh/gvegayon/partition/branch/master/graph/badge.svg)](https://codecov.io/github/gvegayon/partition?branch=master)
+[![Travis build status](https://travis-ci.org/USCbiostats/partition.svg?branch=master)](https://travis-ci.org/USCbiostats/partition) [![Build status](https://ci.appveyor.com/api/projects/status/9rnot7opu66xpyns/branch/master?svg=true)](https://ci.appveyor.com/project/gvegayon/partition-nqr95/branch/master) [![Coverage status](https://codecov.io/gh/USCbiostats/partition/branch/master/graph/badge.svg)](https://codecov.io/github/USCbiostats/partition?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 partition
