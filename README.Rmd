@@ -2,9 +2,9 @@
 output: github_document
 ---
 
-[![Travis build status](https://travis-ci.org/gvegayon/partition.svg?branch=master)](https://travis-ci.org/gvegayon/partition)
-[![AppVeyor Build Status](https://ci.appveyor.com/gvegayon/partition)](https://ci.appveyor.com/api/projects/status/github//gvegayon/partition/?branch=master&svg=true)
-[![Coverage status](https://codecov.io/gh/gvegayon/partition/branch/master/graph/badge.svg)](https://codecov.io/github/gvegayon/partition?branch=master)
+[![Travis build status](https://travis-ci.org/USCbiostats/partition.svg?branch=master)](https://travis-ci.org/USCbiostats/partition)
+[![Build status](https://ci.appveyor.com/api/projects/status/9rnot7opu66xpyns/branch/master?svg=true)](https://ci.appveyor.com/project/gvegayon/partition-nqr95/branch/master)
+[![Coverage status](https://codecov.io/gh/USCbiostats/partition/branch/master/graph/badge.svg)](https://codecov.io/github/USCbiostats/partition?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -26,7 +26,7 @@ You can install partition from GitHub with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("gvegayon/partition")
+devtools::install_github("USCbiostats/partition")
 ```
 
 ## Example
