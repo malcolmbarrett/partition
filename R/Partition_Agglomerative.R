@@ -8,69 +8,39 @@
 
 smry.mthd = function( tmpmat, method ){
 	switch( method,
-		ICC.mn = ICC.mn( tmpmat ),
-		ICC.sm = ICC.log.sm( tmpmat ),
-		MI.mn = MI.mn( tmpmat ),
-		MI.sm = MI.sm( tmpmat ),
-		minR2.mn = minR2.mn( tmpmat ),
-		minR2.sm = minR2.sm( tmpmat ),
+		ICC = ICC( tmpmat ),
+		MI = MI( tmpmat ),
+		minR2 = minR2( tmpmat ),
 		PC1 = pc1( tmpmat ),
-		PC1.log = pc1.log( tmpmat ) )
 } # End function smry.mthd
 
-# function to compute ICC after log( +1) transformation
-# return ICC and sum of raw variables
-ICC.log.sm = function( tmpmat ){
-	dat.vec = log(as.numeric( as.matrix(tmpmat) )+1)
-	nms = as.factor( rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) ) )
-	outp = vector('list', 2 )
-	outp[[1]] = ICC::ICCbareF( nms, dat.vec ) 
-	outp[[2]] = apply(tmpmat, 1, sum, na.rm=TRUE)
-	return( outp )
-} # End ICC.log.sm
-
 # return ICC and mean of raw variables, center and scale
-ICC.mn = function( tmpmat ){
+ICC = function( tmpmat ){
 	dat.vec = as.numeric( as.matrix(tmpmat) )
 	nms = as.factor( rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) ) )
 	outp = vector('list', 2 )
 	outp[[1]] = ICC::ICCbareF( nms, dat.vec ) 
-	outp[[2]] = apply(tmpmat, 1, mean, na.rm=TRUE)
+	outp[[2]] = scale( apply(tmpmat, 1, mean, na.rm=TRUE) )
 	return( outp )
-} # End ICC.mn
+} # End ICC
 
 # function to compute standardized mutual information and return mean
-MI.mn = function( tmpmat ){
+MI = function( tmpmat ){
 	tmpmat1 = infotheo::discretize( tmpmat, disc="equalfreq" )
 	myy = apply(tmpmat, 1, mean, na.rm=TRUE)
 	myy.d = infotheo::discretize( myy, disc="equalfreq" )
 	tmp = infotheo::mutinformation( tmpmat1, myy.d, method="shrink" ) # methods: emp mm shrink sg
 	etpy = infotheo::entropy(cbind(tmpmat1, myy.d), method="shrink" )
 	std.mi = tmp / etpy
-	outp = vector('list', 2 )
+	outp = vector('list', 2)
 	outp[[1]] = std.mi   # standardized mutual information
-	outp[[2]] = apply(tmpmat, 1, mean, na.rm=TRUE)
+	outp[[2]] = scale( myy )
 	return( outp )
-} # End MI.sm
-
-# function to compute standardized mutual information and return sum
-MI.sm = function( tmpmat ){
-	tmpmat1 = infotheo::discretize( tmpmat, disc="equalfreq" )
-	myy = apply(tmpmat, 1, sum, na.rm=TRUE)
-	myy.d = infotheo::discretize( myy, disc="equalfreq" )
-	tmp = infotheo::mutinformation( tmpmat1, myy.d, method="shrink" ) # methods: emp mm shrink sg
-	etpy = infotheo::entropy(cbind(tmpmat1, myy.d), method="shrink" )
-	std.mi = tmp / etpy
-	outp = vector('list', 2 )
-	outp[[1]] = std.mi   # standardized mutual information
-	outp[[2]] = apply(tmpmat, 1, sum, na.rm=TRUE)
-	return( outp )
-} # End MI.sm
+} # End MI
 
 # return min R^2 and mean of raw variables, center and scale
-minR2.mn = function( tmpmat ){
-	myy = apply(tmpmat, 1, mean, na.rm=TRUE)
-	myyn = (myy - mean(myy, na.rm=TRUE)) / sd(myy, na.rm=TRUE) # center and scale myy
+minR2 = function( tmpmat ){
+	myyn = scale( apply(tmpmat, 1, mean, na.rm=TRUE) )
 	cors = cor( cbind(myyn, tmpmat), method="pearson", use="pairwise.complete.obs")
 	cors2 = cors^2
 	minR2 = min( cors2[ -1, "myyn" ] )
@@ -79,45 +49,17 @@ minR2.mn = function( tmpmat ){
 	outp[[1]] = minR2
 	outp[[2]] = myyn
 	return( outp )
-} # End minR2.mn
-
-# return min Spearman R^2 and sum of raw variables
-minR2.sm = function( tmpmat ){
-	myy = apply(tmpmat, 1, sum, na.rm=TRUE)
-	cors = cor( cbind(myy, tmpmat), method="spearman", use="pairwise.complete.obs")
-	cors2 = cors^2
-	minR2 = min( cors2[ -1, "myy" ] )
-	nms = rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) )
-	outp = vector('list', 2 )
-	outp[[1]] = minR2
-	outp[[2]] = myy
-	return( outp )
-} # End minR2.sm
+} # End minR2
 
 # function to compute PC1 and return percent variance explained
 pc1 = function( mymat ){
 	rot = prcomp( mymat, retx = TRUE, center=TRUE, scale=TRUE, tol=sqrt(.Machine$double.eps) )
 	pct.var = rot$sdev[1]^2 / sum(rot$sdev^2)
-	mypc1 = rot$x[, 1 ]
-	mypc1 = (mypc1 - mean(mypc1, na.rm=TRUE)) / sd(mypc1, na.rm=TRUE) # center and scale PC1
 	outp = vector('list', 2 )
 	outp[[1]] = pct.var
-	outp[[2]] = mypc1
+	outp[[2]] = scale( rot$x[, 1 ] ) 
 	return( outp )
-}
-
-# function to compute PC1 and return percent variance explained
-pc1.log = function( mymat ){
-	mymat.log = log(as.matrix(mymat) + 1)
-	rot = prcomp( mymat.log, retx = TRUE, center=TRUE, scale=TRUE, tol=sqrt(.Machine$double.eps) )
-	pct.var = rot$sdev[1]^2 / sum(rot$sdev^2)
-	mypc1 = rot$x[, 1 ]
-	mypc1 = (mypc1 - mean(mypc1, na.rm=TRUE)) / sd(mypc1, na.rm=TRUE) # center and scale PC1
-	outp = vector('list', 2 )
-	outp[[1]] = pct.var
-	outp[[2]] = mypc1
-	return( outp )
-}
+} # End pc1
 
 # correlation distance
 r.dist.s = function(x1, x2) 1 - cor(x1, x2, method="spearman", use="pairwise.complete.obs")
