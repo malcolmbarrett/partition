@@ -32,7 +32,7 @@ km_icc = function( mymat, k ){
 		c.nm = paste( "C", c, sep="" )
 		tmpdat = as.matrix( mymat[ , is.element( clstrs, c ) ] )
 		if( ncol(tmpdat) > 1 ){
-			tmp.icc = ICC.mn( tmpdat )
+			tmp.icc = ICC( tmpdat )
 			cluster.info[ is.element(cluster.info[,"cluster"], c.nm) , "icc"] = tmp.icc[[ 1 ]]
 			dat.r[, c.nm ] = tmp.icc[[ 2 ]]
 		} else {
