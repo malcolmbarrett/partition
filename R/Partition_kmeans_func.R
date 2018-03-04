@@ -6,44 +6,43 @@
 
 # Function to compute ICC values from k-means results
 km_icc = function( mymat, k ){
-	nms = c("variable", "cluster", "icc")
-	cluster.info = as.data.frame( matrix(NA, ncol=length(nms), nrow=ncol(mymat)) )
-	names(cluster.info) = nms
+	clusters = as.data.frame( matrix( NA, nrow=ncol(mymat), ncol=2 ) )
+	rownames(clusters) = colnames(mymat)
+	names(clusters) = c("cluster", "pct.var")
 	
 	if( k < ncol(mymat) ){
 		clstrs = kmeans( t(mymat), centers=k, nstart=25 )$cluster
 	} else {
 		dat.r = mymat
-		cluster.info[, "variable"] = colnames( mymat )
-		cluster.info[, "cluster"] = colnames( mymat )
-		cluster.info[, "icc"] = 1
+		clusters[, "cluster"] = colnames( mymat )
+		clusters[, "pct.var"] = 1
 		outp = vector('list', 2 )
 		outp[[1]] = dat.r
-		outp[[2]] = cluster.info
+		outp[[2]] = clusters
 		return( outp )
 	}
 	
-	cluster.info[, "variable"] = names( clstrs )
-	cluster.info[, "cluster"] = paste( "C", clstrs, sep="" )
+	rownames(clusters) = names( clstrs )
+	clusters[, "cluster"] = paste( "ReducedNewVar", clstrs, sep="" )
 	dat.r = as.data.frame( matrix(NA, ncol=k, nrow=nrow(mymat)) )
-	names(dat.r) = paste( "C", 1:k, sep="" )
+	names(dat.r) = paste( "ReducedNewVar", 1:k, sep="" )
 	
 	for( c in 1:k ){
-		c.nm = paste( "C", c, sep="" )
+		c.nm = paste( "ReducedNewVar", c, sep="" )
 		tmpdat = as.matrix( mymat[ , is.element( clstrs, c ) ] )
 		if( ncol(tmpdat) > 1 ){
 			tmp.icc = ICC( tmpdat )
-			cluster.info[ is.element(cluster.info[,"cluster"], c.nm) , "icc"] = tmp.icc[[ 1 ]]
+			clusters[ is.element(clusters[,"cluster"], c.nm) , "pct.var"] = tmp.icc[[ 1 ]]
 			dat.r[, c.nm ] = tmp.icc[[ 2 ]]
 		} else {
-			cluster.info[ is.element(cluster.info[,"cluster"], c.nm) , "icc"] = 1
+			clusters[ is.element(clusters[,"cluster"], c.nm) , "pct.var"] = 1
 			dat.r[, c.nm ] = tmpdat[, 1 ]
 		}
 	} # end c loop
 
 	outp = vector('list', 2 )
 	outp[[1]] = dat.r
-	outp[[2]] = cluster.info
+	outp[[2]] = clusters
 	return( outp )
 } # end km_icc
 
@@ -100,7 +99,7 @@ kmeans_icc = function( mymat, threshold.icc ){
 	n.low = 0
 	for( k in (m-1):1 ){
 		tmp.km = km_icc( mymat, k )
-		min.icc = min( tmp.km[[ 2 ]][ , "icc" ] )
+		min.icc = min( tmp.km[[ 2 ]][ , "pct.var" ] )
 		min.icc.m[k] = min.icc
 		if( min.icc < threshold.icc ) n.low = n.low + 1
 		if( n.low > 3 ){ 
