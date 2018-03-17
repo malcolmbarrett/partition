@@ -11,7 +11,7 @@ smry.mthd = function( tmpmat, method ){
 		ICC = ICC( tmpmat ),
 		MI = MI( tmpmat ),
 		minR2 = minR2( tmpmat ),
-		PC1 = pc1( tmpmat ),
+		PC1 = pc1( tmpmat ) )
 } # End function smry.mthd
 
 # return ICC and mean of raw variables, center and scale
