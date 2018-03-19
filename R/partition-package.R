@@ -21,7 +21,8 @@ NULL
 
 
 #' @importFrom stats anova glm lm na.exclude pf pnorm qnorm resid sd var cor
-#'  prcomp kmeans runif
+#'  prcomp kmeans runif rnbinom
+#' @importFrom utils data
 #' @importFrom grDevices dev.off pdf
 #' @importFrom graphics hist
 #' @importFrom ggplot2 theme_bw geom_area scale_fill_brewer scale_x_continuous sec_axis

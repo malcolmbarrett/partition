@@ -13,6 +13,8 @@
 #' Samples included > 20,000 reads
 #' NBZIN parameters estimated using the zeroinfl() function of the pscl R package.
 #'
+#' @name params
+#'
 #' @docType data
 #'
 #' @usage data(params)
@@ -24,3 +26,4 @@
 #'
 #' @examples
 #' data(params)
+NULL

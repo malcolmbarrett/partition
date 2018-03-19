@@ -25,7 +25,7 @@ logit = function( myxb ){
 #' of these variables is negative binomial w/ zero inflation where the mean depends on 
 #' xvec through beta.
 #' @param xvec A vector of values that influence the mean of the simulated data through beta
-#'  via a log-linear combination, that is, log(adjusted(mu)[i]) = mu.estimated + beta*xvec[i]*IQR(xvec),
+#'  via a log-linear combination, that is, log(adjusted(mu)(i)) = mu.estimated + beta*xvec(i)*IQR(xvec),
 #' for individual i, where IQR scales beta to the interquartile range of xvec.
 #' @param beta Within each block, variables are correlated according to values
 #' sampled from a uniform distribution with upper bound c.ub.
