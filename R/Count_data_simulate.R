@@ -32,7 +32,7 @@ logit = function( myxb ){
 #' @param alt.ind Number of observations in the dataset.
 #' 
 #' @examples
-#' 
+#' data(params)
 #' ntaxa = 5
 #' xvec = rnorm( 200 )
 #' beta = .1
@@ -47,7 +47,6 @@ logit = function( myxb ){
 #' 
 #' @export
 sim.nb = function (ntaxa, xvec, beta=0, alt.ind=NULL) {
-	data(params)
 	ss = length(xvec)
 	xvec1 = scale(xvec)
 	# compute means conditional on covariates, simulate negbiom data

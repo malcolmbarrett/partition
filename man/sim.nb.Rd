@@ -27,7 +27,7 @@ Samples included > 20,000 reads
 NBZIN parameters in dataset params estimated using the zeroinfl() function of the pscl R package.
 }
 \examples{
-
+data(params)
 ntaxa = 5
 xvec = rnorm( 200 )
 beta = .1

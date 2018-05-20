@@ -26,4 +26,4 @@
 #'
 #' @examples
 #' data(params)
-NULL
+"params"
