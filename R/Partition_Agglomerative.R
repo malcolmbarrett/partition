@@ -114,6 +114,7 @@ assn.clustr = function( clust.vec, dist.r, dat.r, dat, pct.var, clusters, cluste
 			aa = !is.null(dim(dat.r)[1])
 			if( aa ) dist.r = updt.dist( dist.r, cluster.nm, clust.var.nms, dat.r, dist.type )
 	} else {   # set distance to NA to avoid testing again
+	  #browser()
 		dist.r[ clust.vec[ 1 ], clust.vec[ 2 ] ] = NA
 	}
 	

@@ -17,9 +17,8 @@
 #' @keywords dimension reduction clustering
 NULL
 
-
-
-
+#' @useDynLib partition, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
 #' @importFrom stats anova glm lm na.exclude pf pnorm qnorm resid sd var cor
 #'  prcomp kmeans runif rnbinom
 #' @importFrom utils data

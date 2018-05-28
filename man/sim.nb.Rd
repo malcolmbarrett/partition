@@ -37,7 +37,7 @@ for( beta in seq(.5,2, length.out=10) ){
 	tmp = sim.nb( ntaxa, xvec, beta, alt.ind=1:ntaxa )
 	tmpc = cor( tmp, method="spearman" )[1,2:ntaxa]
 	print( paste("beta =", beta, "cor =", tmpc) )
-	for( j in 1:ntaxa ) print( paste( cor(xvec,tmp[,j],method="spearman") ) )
+	for( j in 1:ntaxa ) print( paste( cor(xvec,tmp[,j],method="spearman") ) ) 
 }
 
 }
