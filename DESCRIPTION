@@ -1,7 +1,7 @@
 Package: partition
 Type: Package
 Title: Agglomerative partitioning framework for dimension reduction of high-dimensional genomic datasets
-Version: 1.0
+Version: 1.0.9000
 Date: 2017-11-6
 Authors@R: person("Joshua", "Millstein", email = "joshua.millstein@usc.edu", 
   role = c("aut", "cre"))
@@ -46,4 +46,4 @@ Suggests:
 URL: https://github.com/USCbiostats/partition
 BugReports: https://github.com/USCbiostats/partition/issues
 LinkingTo: 
-    Rcpp
+    Rcpp, RcppArmadillo, RcppMLPACK

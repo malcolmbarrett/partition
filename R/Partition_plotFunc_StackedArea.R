@@ -120,9 +120,9 @@
 #' n = 200
 #' 
 #' dat = sim_blk_diag_mvn( blk.vec, c.lb, c.ub, n  )
-#' 
+#' \dontrun{
 #' rslts = plot_dr( dat, method="PC1" )
-#' 
+#' }
 #' @export
 plot_dr = function(
   dat,

@@ -128,9 +128,9 @@ c.ub = .4
 n = 200
 
 dat = sim_blk_diag_mvn( blk.vec, c.lb, c.ub, n  )
-
+\dontrun{
 rslts = plot_dr( dat, method="PC1" )
-
+}
 }
 \references{
 Millstein J, et al.

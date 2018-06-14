@@ -16,12 +16,11 @@ smry.mthd = function( tmpmat, method ){
 
 # return ICC and mean of raw variables, center and scale
 ICC = function( tmpmat ){
-	dat.vec = as.numeric( as.matrix(tmpmat) )
-	nms = as.factor( rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) ) )
-	outp = vector('list', 2 )
-	outp[[1]] = ICC::ICCbareF( nms, dat.vec ) 
-	outp[[2]] = scale( apply(tmpmat, 1, mean, na.rm=TRUE) )
-	return( outp )
+  ICC_c(as.matrix(tmpmat))
+	# outp = vector('list', 2 )
+	# outp[[1]] = icc_c(tmpmat)
+	# outp[[2]] = scale(rowMeans(tmpmat, na.rm = TRUE))
+	# return( outp )
 } # End ICC
 
 # function to compute standardized mutual information and return mean
@@ -40,37 +39,40 @@ MI = function( tmpmat ){
 
 # return min R^2 and mean of raw variables, center and scale
 minR2 = function( tmpmat ){
-	myyn = scale( apply(tmpmat, 1, mean, na.rm=TRUE) )
-	cors = cor( cbind(myyn, tmpmat), method="pearson", use="pairwise.complete.obs")
-	cors2 = cors^2
-	minR2 = min( cors2[ -1, "myyn" ] )
-	nms = rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) )
-	outp = vector('list', 2 )
-	outp[[1]] = minR2
-	outp[[2]] = myyn
-	return( outp )
+  minR2_c(as.matrix(tmpmat))
+	# myyn = scale( apply(tmpmat, 1, mean, na.rm=TRUE) )
+	# cors = cor( cbind(myyn, tmpmat), method="pearson", use="pairwise.complete.obs")
+	# cors2 = cors^2
+	# minR2 = min( cors2[ -1, "myyn" ] )
+	# nms = rep( paste( "V", 1:nrow(tmpmat), sep="" ), ncol(tmpmat) )
+	# outp = vector('list', 2 )
+	# outp[[1]] = minR2
+	# outp[[2]] = myyn
+	# return( outp )
 } # End minR2
 
 # function to compute PC1 and return percent variance explained
 pc1 = function( mymat ){
-	rot = prcomp( mymat, retx = TRUE, center=TRUE, scale=TRUE, tol=sqrt(.Machine$double.eps) )
-	pct.var = rot$sdev[1]^2 / sum(rot$sdev^2)
-	outp = vector('list', 2 )
-	outp[[1]] = pct.var
-	outp[[2]] = scale( rot$x[, 1 ] ) 
-	return( outp )
+  pca_c(as.matrix(mymat))
+	# rot = prcomp( mymat, retx = TRUE, center=TRUE, scale=TRUE, tol=sqrt(.Machine$double.eps) )
+	# pct.var = rot$sdev[1]^2 / sum(rot$sdev^2)
+	# outp = vector('list', 2 )
+	# outp[[1]] = pct.var
+	# outp[[2]] = scale( rot$x[, 1 ] ) 
+	# return( outp )
 } # End pc1
 
 # correlation distance
-r.dist.s = function(x1, x2) 1 - cor(x1, x2, method="spearman", use="pairwise.complete.obs")
-r.dist.p = function(x1, x2) 1 - cor(x1, x2, method="pearson", use="pairwise.complete.obs")
+r.dist.s = function(x1, x2) 1 - corr(x1, x2, spearman = TRUE)
+r.dist.p = function(x1, x2) 1 - corr(x1, x2)
 
 # function to update distance matrix with cluster variable replacing raw variables
 updt.dist = function( dist.r, cluster.nm, clust.var.nms, dat.r, dist.type ){
+ 
 	myvar = dat.r[, cluster.nm ]  
-	nms1 = colnames(dat.r)[ !is.element( colnames(dat.r), cluster.nm ) ]
-	dat.r.tmp = as.data.frame( dat.r[, nms1 ] )
-	names( dat.r.tmp ) = nms1
+	nms = colnames(dat.r)[colnames(dat.r) %nin% cluster.nm]
+	dat.r.tmp = as.data.frame( dat.r[, nms ] )
+	names( dat.r.tmp ) = nms
 	# compute distances between myvar and other variables
 	if( !is.na(dim(dat.r.tmp)[1]) ){
 		if(dist.type == "s"){
@@ -82,22 +84,25 @@ updt.dist = function( dist.r, cluster.nm, clust.var.nms, dat.r, dist.type ){
 	}
 	
 	# remove cluster component variables from distance matrix
-	dist.r = dist.r[ !is.element( rownames(dist.r), clust.var.nms ), !is.element( colnames(dist.r), clust.var.nms ) ]
+	dist.r = dist.r[ rownames(dist.r) %nin% clust.var.nms, 
+	                 colnames(dist.r) %nin% clust.var.nms ]
 	if( !is.null(dim(dist.r)[1])){
+	  
 		dist.r = cbind( dist.r[ names(tmp.dist), ], tmp.dist )
 		colnames( dist.r )[ncol(dist.r)] = cluster.nm
 		dist.r = rbind( dist.r, rep(NA, ncol(dist.r)) )
 		rownames( dist.r )[ nrow(dist.r) ] = cluster.nm
 	}
-	return( dist.r )
+	
+	dist.r
 } # End function updt.dist
 
 assn.clustr = function( clust.vec, dist.r, dat.r, dat, pct.var, clusters, cluster.ind, method, dist.type ){
 	success = FALSE
 	clust.var.nms = colnames(dat.r[ , clust.vec ])
-	clust.var.nms.raw = rownames(clusters)[ is.element( clusters[,"cluster"], colnames(dat.r[ , clust.vec ]) ) ]
+	mapping.index = clusters[,"cluster"] %in% colnames(dat.r[ , clust.vec ])
+	clust.var.nms.raw = rownames(clusters)[mapping.index]
 	cluster.nm = paste( "ReducedNewVar", cluster.ind, sep="" )
-	
 	# 2. compute summary and test against pct.var
 	var.ind = which( is.element( colnames(dat), clust.var.nms.raw ) )
 	tmp.svec = smry.mthd( dat[, var.ind], method )
@@ -114,7 +119,7 @@ assn.clustr = function( clust.vec, dist.r, dat.r, dat, pct.var, clusters, cluste
 			aa = !is.null(dim(dat.r)[1])
 			if( aa ) dist.r = updt.dist( dist.r, cluster.nm, clust.var.nms, dat.r, dist.type )
 	} else {   # set distance to NA to avoid testing again
-	  #browser()
+
 		dist.r[ clust.vec[ 1 ], clust.vec[ 2 ] ] = NA
 	}
 	
@@ -236,8 +241,8 @@ assn.clustr = function( clust.vec, dist.r, dat.r, dat, pct.var, clusters, cluste
 #' rslts = partition( dat, pct.var=.8, method="PC1", dist.type="p" )
 #' 
 #' @export
-partition = function( mymat, pct.var, method, dist.type="p" ){
-	mymat = as.data.frame( mymat )
+partition = function( mat, pct.var, method, dist.type="p", niter = 1000){
+	mymat = as.data.frame( mat )
 	m = ncol(mymat)
 	
 	mymat.r = mymat 
@@ -245,9 +250,9 @@ partition = function( mymat, pct.var, method, dist.type="p" ){
 	
 	# r-squared distance
 	if(dist.type == "s"){
-		mydist = 1 - cor( mymat, use="pairwise.complete.obs", method="spearman" ) 
+		mydist = 1 - corr(mymat, spearman = TRUE)
 	} else {
-		mydist = 1 - cor( mymat, use="pairwise.complete.obs", method="pearson" ) 
+		mydist = 1 - corr(mymat) 
 	}
 	mydist[ lower.tri(mydist, diag=TRUE) ] = NA
 	mydist.r = mydist                                            # distance matrix to be updated and reduced as clusters are formed
@@ -255,6 +260,7 @@ partition = function( mymat, pct.var, method, dist.type="p" ){
 	
 	# update cluster membership to this dataframe
 	clusters = as.data.frame( matrix( NA, nrow=m, ncol=2 ) )
+	
 	rownames(clusters) = colnames(mymat)
 	names(clusters) = c("cluster", "pct.var")
 	clusters[, "cluster"] = colnames(mymat)
@@ -262,23 +268,33 @@ partition = function( mymat, pct.var, method, dist.type="p" ){
 	cluster.ind = 1 # increment indicator for cluster name every time an allowable cluster is formed
 	
 	min0 = 0 # minimum distance with no qualifying pairs
-	while( min0 < 1000 ){
+	while ( min0 < niter ){
 		# identify the closest pairs
 		#print( paste( iter, Sys.time(), "Min0:", min0) )
 		
-		if( sum(mydist.r, na.rm=TRUE) > 0 ) mymin = min(mydist.r, na.rm=TRUE) else break
+		if ( sum(mydist.r, na.rm=TRUE) > 0 ) mymin = min(mydist.r, na.rm=TRUE) else break
 		tmp.min = which( mydist.r <= mymin, arr.ind=TRUE )
 		tmp.min = tmp.min[ 1, ]
-		if( mymin >= maxdist ) break
+		if ( mymin >= maxdist ) break
 		
-		if(dim(mydist.r)[1] < 2) break
+		if (dim(mydist.r)[1] < 2) break
 		# assign clusters
-		tmpout =  assn.clustr( tmp.min, mydist.r, mymat.r, mymat, pct.var, clusters, cluster.ind, method, dist.type )
+		# browser()
+		# tmpout =  assign_clusters(tmp.min, as.matrix(mydist.r), as.matrix(mymat.r),
+		#                           as.matrix(mymat), pct.var, clusters, cluster.ind,
+		#                           method, dist.type, "ReducedNewVar")
+		
+		tmpout =  assn.clustr(tmp.min, mydist.r, mymat.r,
+		                          mymat, pct.var, clusters, cluster.ind,
+		                          method, dist.type)
+
+		
 		
 		clusters = tmpout[[ 1 ]]
 		cluster.ind = tmpout[[ 2 ]]
 		mydist.r = tmpout[[ 3 ]]
 		mymat.r = tmpout[[ 4 ]]
+		
 		if( tmpout[[ 5 ]] ) min0 = 0 else min0 = min0 + 1
 	} # End while tmp.min
 	
@@ -308,34 +324,39 @@ partition = function( mymat, pct.var, method, dist.type="p" ){
 #' sampled from a uniform distribution with lower bound c.lb.
 #' @param c.ub Within each block, variables are correlated according to values
 #' sampled from a uniform distribution with upper bound c.ub.
+#' @param blk.names Character vector for column name prefix. Default is "X.mvn".
+#' @param sep Character separating prefix and number in column names. Default is
+#'  ".".
 #' @param n Number of observations in the dataset.
+#'
 #' @return A dataframe with sum(blk.vec) columns and n rows.
 #' @author Joshua Millstein
 #' @references Millstein J, et al.
 #' @examples
 #' 
 #' 
-#' blk.vec = 2:20
-#' c.lb = .2
-#' c.ub = .4
-#' n = 200
+#' block_sizes <- 2:20
+#' lower_bound <- .2
+#' upper_bound <- .4
+#' n <- 200
 #' 
-#' dat = sim_blk_diag_mvn( blk.vec, c.lb, c.ub, n  )
+#' dat <- sim_blk_diag_mvn(block_sizes, lower_bound, upper_bound, n)
 #' 
 #' @export
-sim_blk_diag_mvn = function( blk.vec, c.lb, c.ub, n  ){
-	blk.num = length(blk.vec)
-	ydat = as.data.frame( matrix( NA, nrow=n, ncol=blk.num ) )
-	for( blk in 1:blk.num ){
-		blk.size = blk.vec[ blk ]
-		sigma = matrix( runif(blk.size*blk.size, c.lb, c.ub), ncol=blk.size, nrow=blk.size )
-		sigma[lower.tri(sigma)] = t(sigma)[lower.tri(sigma)]
-		diag(sigma) = 1
-		tmp = MASS::mvrnorm( n, mu=rep(0,blk.size), Sigma=sigma )
-		if( blk == 1 ) xdat = tmp else xdat = cbind( xdat, tmp )
-	} # End blk loop
+sim_blk_diag_mvn <- function(blk.vec, c.lb, c.ub, n, blk.names = "X.mvn", 
+                             sep = ".") {
 	
-	xdat = as.data.frame( xdat )
-	names( xdat ) = paste( "X.mvn", 1:ncol(xdat), sep="." )
-	return( xdat )
+	blks <- lapply(blk.vec, function(blk.size) {
+    sigma <- matrix(runif(blk.size * blk.size, c.lb, c.ub), 
+                    ncol = blk.size, 
+                    nrow = blk.size)
+    sigma[lower.tri(sigma)] <- t(sigma)[lower.tri(sigma)]
+    diag(sigma) <- 1
+    MASS::mvrnorm(n, mu = rep(0, blk.size), Sigma = sigma)
+	})
+	
+	sim_data  <- do.call(cbind.data.frame, blks)
+	names(sim_data) <- paste(blk.names, seq_along(sim_data), sep = sep)
+	
+	sim_data
 } # End function sim_blk_diag_mvn

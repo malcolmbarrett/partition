@@ -4,7 +4,7 @@
 \alias{sim_blk_diag_mvn}
 \title{Simulate block diagonal multivariate normal data}
 \usage{
-sim_blk_diag_mvn(blk.vec, c.lb, c.ub, n)
+sim_blk_diag_mvn(blk.vec, c.lb, c.ub, n, blk.names = "X.mvn", sep = ".")
 }
 \arguments{
 \item{blk.vec}{Vector of block sizes that determines the total number of
@@ -17,6 +17,11 @@ sampled from a uniform distribution with lower bound c.lb.}
 sampled from a uniform distribution with upper bound c.ub.}
 
 \item{n}{Number of observations in the dataset.}
+
+\item{blk.names}{Character vector for column name prefix. Default is "X.mvn".}
+
+\item{sep}{Character separating prefix and number in column names. Default is
+".".}
 }
 \value{
 A dataframe with sum(blk.vec) columns and n rows.
@@ -35,12 +40,12 @@ c.ub) distribution prior to data generation.
 \examples{
 
 
-blk.vec = 2:20
-c.lb = .2
-c.ub = .4
-n = 200
+block_sizes <- 2:20
+lower_bound <- .2
+upper_bound <- .4
+n <- 200
 
-dat = sim_blk_diag_mvn( blk.vec, c.lb, c.ub, n  )
+dat <- sim_blk_diag_mvn(block_sizes, lower_bound, upper_bound, n)
 
 }
 \references{

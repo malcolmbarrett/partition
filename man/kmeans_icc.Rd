@@ -10,19 +10,19 @@ kmeans_icc(mymat, threshold.icc)
 \item{mymat}{Full dataset, NxP matrix or dataframe with N samples in rows
 and P variables in columns.}
 
-\item{threshold.icc}{This values specifies the maximum information loss for
-any cluster as measured by the ICC. Using k-means, the input dataset is
-reduced to an NxK dataset, where K is as small as small as possible subject
-the constraint. Reducing the threshold.icc yields a more permissive
+\item{threshold.icc}{This value (0 < threshold.icc < 1) specifies the maximum
+information loss for any cluster as measured by the ICC. Using k-means, the
+input dataset is reduced to an NxK dataset, where K is as small as possible
+subject the constraint. Reducing the threshold.icc yields a more permissive
 constraint, which tends to reduce the dimension K in the output dataset.}
 }
 \value{
-A list which includes the following columns: \item{ dat.r }{A
-dataset (dataframe) with reduced number of variables, dimensions N x R.}
+A list which includes the following columns: \item{ dat.r }{A dataset
+(dataframe) with reduced number of variables, dimensions N x R.}
 \item{cluster.info }{A dataset (dataframe) specifying the mapping between
-the original variables and the reduced variables. Also included is a column,
-icc, with ICC estimates for proportion of variance captured by the summary
-variable, the mean.}
+the original variables and the reduced variables. Also included is a
+column, icc, with ICC estimates for proportion of variance captured by the
+summary variable, the mean.}
 }
 \description{
 Dimension reduction function using k-means to partition variables into
