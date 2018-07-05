@@ -19,120 +19,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// kmeans_c
-List kmeans_c(SEXP data, const int& clusters);
-RcppExport SEXP _partition_kmeans_c(SEXP dataSEXP, SEXP clustersSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< const int& >::type clusters(clustersSEXP);
-    rcpp_result_gen = Rcpp::wrap(kmeans_c(data, clusters));
-    return rcpp_result_gen;
-END_RCPP
-}
-// bind_empty_row
-NumericMatrix bind_empty_row(NumericMatrix x);
-RcppExport SEXP _partition_bind_empty_row(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(bind_empty_row(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// has_rownames
-bool has_rownames(NumericMatrix x);
-RcppExport SEXP _partition_has_rownames(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(has_rownames(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// has_colnames
-bool has_colnames(NumericMatrix x);
-RcppExport SEXP _partition_has_colnames(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(has_colnames(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// subset_c
-NumericMatrix subset_c(NumericMatrix x, IntegerVector subset);
-RcppExport SEXP _partition_subset_c(SEXP xSEXP, SEXP subsetSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type subset(subsetSEXP);
-    rcpp_result_gen = Rcpp::wrap(subset_c(x, subset));
-    return rcpp_result_gen;
-END_RCPP
-}
-// drop
-NumericMatrix drop(NumericMatrix x, IntegerVector subset);
-RcppExport SEXP _partition_drop(SEXP xSEXP, SEXP subsetSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type subset(subsetSEXP);
-    rcpp_result_gen = Rcpp::wrap(drop(x, subset));
-    return rcpp_result_gen;
-END_RCPP
-}
-// drop_dist
-NumericMatrix drop_dist(NumericMatrix reduced_dist, IntegerVector distance_index);
-RcppExport SEXP _partition_drop_dist(SEXP reduced_distSEXP, SEXP distance_indexSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type reduced_dist(reduced_distSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type distance_index(distance_indexSEXP);
-    rcpp_result_gen = Rcpp::wrap(drop_dist(reduced_dist, distance_index));
-    return rcpp_result_gen;
-END_RCPP
-}
-// icc_c
-NumericVector icc_c(NumericMatrix x);
-RcppExport SEXP _partition_icc_c(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(icc_c(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// scale_rowmeans
-NumericVector scale_rowmeans(NumericMatrix x);
-RcppExport SEXP _partition_scale_rowmeans(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(scale_rowmeans(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// ICC_c
-List ICC_c(NumericMatrix x);
-RcppExport SEXP _partition_ICC_c(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(ICC_c(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rank_c
 Rcpp::NumericVector rank_c(Rcpp::NumericVector x);
 RcppExport SEXP _partition_rank_c(SEXP xSEXP) {
@@ -214,14 +100,48 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// pca_c
-List pca_c(arma::mat x);
-RcppExport SEXP _partition_pca_c(SEXP xSEXP) {
+// icc_c
+NumericVector icc_c(NumericMatrix x);
+RcppExport SEXP _partition_icc_c(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(pca_c(x));
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(icc_c(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// scale_rowmeans
+NumericVector scale_rowmeans(NumericMatrix x);
+RcppExport SEXP _partition_scale_rowmeans(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(scale_rowmeans(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ICC_c
+List ICC_c(NumericMatrix x);
+RcppExport SEXP _partition_ICC_c(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(ICC_c(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// kmeans_c
+List kmeans_c(SEXP data, const int& clusters);
+RcppExport SEXP _partition_kmeans_c(SEXP dataSEXP, SEXP clustersSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< const int& >::type clusters(clustersSEXP);
+    rcpp_result_gen = Rcpp::wrap(kmeans_c(data, clusters));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -271,19 +191,89 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// pca_c
+List pca_c(arma::mat x);
+RcppExport SEXP _partition_pca_c(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(pca_c(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// bind_empty_row
+NumericMatrix bind_empty_row(NumericMatrix x);
+RcppExport SEXP _partition_bind_empty_row(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(bind_empty_row(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// has_rownames
+bool has_rownames(NumericMatrix x);
+RcppExport SEXP _partition_has_rownames(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(has_rownames(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// has_colnames
+bool has_colnames(NumericMatrix x);
+RcppExport SEXP _partition_has_colnames(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(has_colnames(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// subset_c
+NumericMatrix subset_c(NumericMatrix x, IntegerVector subset);
+RcppExport SEXP _partition_subset_c(SEXP xSEXP, SEXP subsetSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type subset(subsetSEXP);
+    rcpp_result_gen = Rcpp::wrap(subset_c(x, subset));
+    return rcpp_result_gen;
+END_RCPP
+}
+// drop
+NumericMatrix drop(NumericMatrix x, IntegerVector subset);
+RcppExport SEXP _partition_drop(SEXP xSEXP, SEXP subsetSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type subset(subsetSEXP);
+    rcpp_result_gen = Rcpp::wrap(drop(x, subset));
+    return rcpp_result_gen;
+END_RCPP
+}
+// drop_dist
+NumericMatrix drop_dist(NumericMatrix reduced_dist, IntegerVector distance_index);
+RcppExport SEXP _partition_drop_dist(SEXP reduced_distSEXP, SEXP distance_indexSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type reduced_dist(reduced_distSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type distance_index(distance_indexSEXP);
+    rcpp_result_gen = Rcpp::wrap(drop_dist(reduced_dist, distance_index));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_partition_arma_kmeans", (DL_FUNC) &_partition_arma_kmeans, 2},
-    {"_partition_kmeans_c", (DL_FUNC) &_partition_kmeans_c, 2},
-    {"_partition_bind_empty_row", (DL_FUNC) &_partition_bind_empty_row, 1},
-    {"_partition_has_rownames", (DL_FUNC) &_partition_has_rownames, 1},
-    {"_partition_has_colnames", (DL_FUNC) &_partition_has_colnames, 1},
-    {"_partition_subset_c", (DL_FUNC) &_partition_subset_c, 2},
-    {"_partition_drop", (DL_FUNC) &_partition_drop, 2},
-    {"_partition_drop_dist", (DL_FUNC) &_partition_drop_dist, 2},
-    {"_partition_icc_c", (DL_FUNC) &_partition_icc_c, 1},
-    {"_partition_scale_rowmeans", (DL_FUNC) &_partition_scale_rowmeans, 1},
-    {"_partition_ICC_c", (DL_FUNC) &_partition_ICC_c, 1},
     {"_partition_rank_c", (DL_FUNC) &_partition_rank_c, 1},
     {"_partition_apply_rank", (DL_FUNC) &_partition_apply_rank, 1},
     {"_partition_corr_c_mat", (DL_FUNC) &_partition_corr_c_mat, 1},
@@ -291,10 +281,20 @@ static const R_CallMethodDef CallEntries[] = {
     {"_partition_corr_c_2vec", (DL_FUNC) &_partition_corr_c_2vec, 2},
     {"_partition_pearson_distance", (DL_FUNC) &_partition_pearson_distance, 2},
     {"_partition_spearman_distance", (DL_FUNC) &_partition_spearman_distance, 2},
-    {"_partition_pca_c", (DL_FUNC) &_partition_pca_c, 1},
+    {"_partition_icc_c", (DL_FUNC) &_partition_icc_c, 1},
+    {"_partition_scale_rowmeans", (DL_FUNC) &_partition_scale_rowmeans, 1},
+    {"_partition_ICC_c", (DL_FUNC) &_partition_ICC_c, 1},
+    {"_partition_kmeans_c", (DL_FUNC) &_partition_kmeans_c, 2},
     {"_partition_minR2_c", (DL_FUNC) &_partition_minR2_c, 1},
     {"_partition_update_dist", (DL_FUNC) &_partition_update_dist, 5},
     {"_partition_assign_clusters", (DL_FUNC) &_partition_assign_clusters, 10},
+    {"_partition_pca_c", (DL_FUNC) &_partition_pca_c, 1},
+    {"_partition_bind_empty_row", (DL_FUNC) &_partition_bind_empty_row, 1},
+    {"_partition_has_rownames", (DL_FUNC) &_partition_has_rownames, 1},
+    {"_partition_has_colnames", (DL_FUNC) &_partition_has_colnames, 1},
+    {"_partition_subset_c", (DL_FUNC) &_partition_subset_c, 2},
+    {"_partition_drop", (DL_FUNC) &_partition_drop, 2},
+    {"_partition_drop_dist", (DL_FUNC) &_partition_drop_dist, 2},
     {NULL, NULL, 0}
 };
 

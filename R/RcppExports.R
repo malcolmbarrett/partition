@@ -5,46 +5,6 @@ arma_kmeans <- function(x, k) {
     .Call(`_partition_arma_kmeans`, x, k)
 }
 
-kmeans_c <- function(data, clusters) {
-    .Call(`_partition_kmeans_c`, data, clusters)
-}
-
-bind_empty_row <- function(x) {
-    .Call(`_partition_bind_empty_row`, x)
-}
-
-has_rownames <- function(x) {
-    .Call(`_partition_has_rownames`, x)
-}
-
-has_colnames <- function(x) {
-    .Call(`_partition_has_colnames`, x)
-}
-
-subset_c <- function(x, subset) {
-    .Call(`_partition_subset_c`, x, subset)
-}
-
-drop <- function(x, subset) {
-    .Call(`_partition_drop`, x, subset)
-}
-
-drop_dist <- function(reduced_dist, distance_index) {
-    .Call(`_partition_drop_dist`, reduced_dist, distance_index)
-}
-
-icc_c <- function(x) {
-    .Call(`_partition_icc_c`, x)
-}
-
-scale_rowmeans <- function(x) {
-    .Call(`_partition_scale_rowmeans`, x)
-}
-
-ICC_c <- function(x) {
-    .Call(`_partition_ICC_c`, x)
-}
-
 rank_c <- function(x) {
     .Call(`_partition_rank_c`, x)
 }
@@ -73,8 +33,20 @@ spearman_distance <- function(x, y) {
     .Call(`_partition_spearman_distance`, x, y)
 }
 
-pca_c <- function(x) {
-    .Call(`_partition_pca_c`, x)
+icc_c <- function(x) {
+    .Call(`_partition_icc_c`, x)
+}
+
+scale_rowmeans <- function(x) {
+    .Call(`_partition_scale_rowmeans`, x)
+}
+
+ICC_c <- function(x) {
+    .Call(`_partition_ICC_c`, x)
+}
+
+kmeans_c <- function(data, clusters) {
+    .Call(`_partition_kmeans_c`, data, clusters)
 }
 
 minR2_c <- function(x) {
@@ -87,5 +59,33 @@ update_dist <- function(reduced_dist, cluster_nm, clust_var_nms, reduced_data, d
 
 assign_clusters <- function(index_r, reduced_dist_r, reduced_data_r, data_r, pct_var, clusters_r, cluster_ind, method, dist_type, new_var) {
     .Call(`_partition_assign_clusters`, index_r, reduced_dist_r, reduced_data_r, data_r, pct_var, clusters_r, cluster_ind, method, dist_type, new_var)
+}
+
+pca_c <- function(x) {
+    .Call(`_partition_pca_c`, x)
+}
+
+bind_empty_row <- function(x) {
+    .Call(`_partition_bind_empty_row`, x)
+}
+
+has_rownames <- function(x) {
+    .Call(`_partition_has_rownames`, x)
+}
+
+has_colnames <- function(x) {
+    .Call(`_partition_has_colnames`, x)
+}
+
+subset_c <- function(x, subset) {
+    .Call(`_partition_subset_c`, x, subset)
+}
+
+drop <- function(x, subset) {
+    .Call(`_partition_drop`, x, subset)
+}
+
+drop_dist <- function(reduced_dist, distance_index) {
+    .Call(`_partition_drop_dist`, reduced_dist, distance_index)
 }
 

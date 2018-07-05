@@ -1,6 +1,6 @@
 Package: partition
 Type: Package
-Title: Agglomerative partitioning framework for dimension reduction of high-dimensional genomic datasets
+Title: Agglomerative Partitioning Framework for Dimension Reduction of High-Dimensional Genomic Datasets
 Version: 1.0.9000
 Date: 2017-11-6
 Authors@R: person("Joshua", "Millstein", email = "joshua.millstein@usc.edu", 
@@ -17,7 +17,8 @@ Imports:
     Rcpp
 Description: A common feature across genomic data types, including genome, 
   epigenome, transcriptome, microbiome, metabolome, etc., is dependencies among 
-  variables. Improvements in genomic technologies accompanied by decreasing costs
+  variables. Improvements in genomic technologies accompanied by decreasing 
+  costs
   have led to vastly increasing amounts of information collected from individual 
   tissue samples. However, this increase in information is often accompanied by 
   increasing dependencies among variables. This dynamic has fueled the need for 
@@ -27,9 +28,11 @@ Description: A common feature across genomic data types, including genome,
   reduced multiple-testing challenge, better-behaved data, and possible increase 
   in statistical power to detect associations with external variables. 
   Algorithms included here use an agglomerative partitioning framework and share 
-  the following goals, 1) minimum information loss given the achieved reduction in
+  the following goals, 1) minimum information loss given the achieved reduction 
+  in
   dimensionality, 2) each original variable maps to one and only one variable in 
-  the reduced dataset, 3) a user specified maximum amount of information loss. The
+  the reduced dataset, 3) a user specified maximum amount of information loss. 
+  The
   framework can be described as a partitioning of the original features into 
   subsets of similar variables with a function applied to each subset to 
   summarize it into a single new variable. Each partition/new variable pair 
@@ -41,9 +44,8 @@ License: Artistic-2.0
 LazyLoad: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1.9000
-Suggests: 
-    covr
 URL: https://github.com/USCbiostats/partition
 BugReports: https://github.com/USCbiostats/partition/issues
-LinkingTo: 
-    Rcpp, RcppArmadillo, RcppMLPACK
+LinkingTo: Rcpp, RcppArmadillo, RcppMLPACK
+Suggests: 
+    covr

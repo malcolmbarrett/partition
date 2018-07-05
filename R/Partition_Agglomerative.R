@@ -197,7 +197,7 @@ assn.clustr = function( clust.vec, dist.r, dat.r, dat, pct.var, clusters, cluste
 #'   adding 1, log(x + 1), designed for count data.
 #' }
 #' 
-#' @param mymat Full dataset, NxP matrix or dataframe with N samples in rows
+#' @param mat Full dataset, NxP matrix or dataframe with N samples in rows
 #' and P variables in columns.
 #' @param pct.var Information constraint for reducing each candidate subset of
 #' variables into a single new summary variable. pct.var must be a value in the
@@ -216,6 +216,7 @@ assn.clustr = function( clust.vec, dist.r, dat.r, dat, pct.var, clusters, cluste
 #' between variables. There are two methods currently implemented. "p"
 #' specifies that similarity will be computed as, 1 - cor( mymat,
 #' use="pairwise.complete.obs", method="pearson" ), whereas, "s" will be, 1 -
+#' @param niter Number of iterations
 #' cor( mymat, use="pairwise.complete.obs", method="spearman" ).
 #' @return A list which includes the following columns:
 #' \item{ mymat.r }{A dataset (dataframe) with reduced number of variables,
@@ -279,17 +280,11 @@ partition = function( mat, pct.var, method, dist.type="p", niter = 1000){
 		
 		if (dim(mydist.r)[1] < 2) break
 		# assign clusters
-		# browser()
-		# tmpout =  assign_clusters(tmp.min, as.matrix(mydist.r), as.matrix(mymat.r),
-		#                           as.matrix(mymat), pct.var, clusters, cluster.ind,
-		#                           method, dist.type, "ReducedNewVar")
 		
-		tmpout =  assn.clustr(tmp.min, mydist.r, mymat.r,
-		                          mymat, pct.var, clusters, cluster.ind,
-		                          method, dist.type)
-
-		
-		
+		tmpout =  assign_clusters(tmp.min, as.matrix(mydist.r), as.matrix(mymat.r),
+		                          as.matrix(mymat), pct.var, clusters, cluster.ind,
+		                          method, dist.type, "ReducedNewVar")
+	
 		clusters = tmpout[[ 1 ]]
 		cluster.ind = tmpout[[ 2 ]]
 		mydist.r = tmpout[[ 3 ]]

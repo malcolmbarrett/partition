@@ -1,3 +1,9 @@
+#  variables used in various NSE calls
+utils::globalVariables(
+  c(
+    "params"
+  ))
+
 corr <- function(x, y = NULL, spearman = FALSE) {
   if (is.null(y)) {
       dim_names <- names(x)
