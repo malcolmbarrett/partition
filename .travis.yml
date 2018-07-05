@@ -9,7 +9,7 @@ before_install:
   - ./run.sh bootstrap
 
 install:
-  - ./run.sh install_aptget r-cran-rcpp r-cran-rcpparmadillo r-cran-bh r-cran-runit
+  - ./run.sh install_aptget r-cran-rcpp r-cran-rcpparmadillo r-cran-bh r-cran-runit r-cran-kernsmooth r-cran-class r-cran-nnet
   
 script:
   - ./run.sh run_tests
