@@ -4,5 +4,20 @@ language: R
 sudo: false
 cache: packages
 
+before_install:
+  - curl -OLs https://eddelbuettel.github.io/r-travis/run.sh && chmod 0755 run.sh
+  - ./run.sh bootstrap
+
+install:
+  - ./run.sh install_aptget r-cran-rcpp r-cran-rcpparmadillo r-cran-bh r-cran-runit
+  
+script:
+  - ./run.sh run_tests
+
+after_failure:
+  - ./run.sh dump_logs
+
 after_success:
     - Rscript -e 'covr::codecov()'
+    
+    
