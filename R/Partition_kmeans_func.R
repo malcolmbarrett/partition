@@ -100,14 +100,14 @@ kmeans_icc = function( mymat, threshold.icc ){
 	m = ncol(mymat)
 	min.icc.m = rep(0, m)
 	n.low = 0
-	for( k in rev(seq_along(mymat))[-1] ){
+	for ( k in seq(m - 1, 1) ) {
 		tmp.km = km_icc( mymat, k )
 		min.icc = min( tmp.km[[ 2 ]][ , "pct.var" ] )
 		min.icc.m[k] = min.icc
-		if( min.icc < threshold.icc ) n.low = n.low + 1
-		if( n.low > 3 ){ 
+		if ( min.icc < threshold.icc ) n.low = n.low + 1
+		if ( n.low > 3 ){ 
 			k.final = which( min.icc.m > threshold.icc )[1]
-			if( is.na(k.final) ){
+			if ( is.na(k.final) ){
 				kmdat = km_icc( mymat, m )
 			} else {
 				kmdat = km_icc( mymat, k.final )
